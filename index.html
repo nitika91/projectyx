@@ -1,0 +1,29 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<form action=""><input type="text" name="word" id="word"></form>
+<div id="auto"></div>
+
+<script>
+$(function(){
+    $('#word').keyup(function(e){
+        var input = $(this).val();
+        $.ajax({
+            type: "get",
+            url: "autoComplete.php",
+            data: {word: input},
+            async: true,
+            success: function(data){
+                var outWords = $.parseJSON(data);
+                $('#auto').html('');
+
+                for(x = 0; x < outWords.length; x++){
+                    $('#auto').prepend('<div>'+outWords[x]+'</div>'); //Fills the #auto div with the options
+                }
+            }
+        })
+    })
+});
+</script>
+
